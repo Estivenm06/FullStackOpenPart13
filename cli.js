@@ -1,60 +1,26 @@
-require("dotenv").config();
-const { Sequelize, DataTypes } = require("sequelize");
-const pg = require("pg");
 const express = require("express");
+require("express-async-errors");
 const app = express();
+const { PORT } = require("./utils/config");
+const { connectToDatabase } = require("./utils/db");
+const blogRouter = require("./controllers/blogRouter");
+const usersRouter = require("./controllers/usersRouter");
+const loginRouter = require('./controllers/loginRouter')
 
 app.use(express.json());
+app.use("/api/blogs", blogRouter);
+app.use("/api/users", usersRouter);
+app.use('/api/login', loginRouter)
 
-const sequelize = new Sequelize(process.env.BACKEND_URL, {
-  dialect: "postgres",
-  dialectModule: pg,
-});
-
-const main = async () => {
+const start = async () => {
   try {
-    await sequelize.authenticate();
-    console.log("You have been successfully connected.");
-  } catch (e) {
-    console.log(e);
+    connectToDatabase();
+    app.listen(PORT, () => {
+      console.log(`Server running on http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.log("An error occurred", error);
   }
 };
 
-main();
-
-app.get("/api/blogs", async (req, res) => {
-  try {
-    const [blogs] = await sequelize.query("SELECT * from blogs;", {
-      type: DataTypes.SELECT,
-    });
-    res.json(blogs);
-  } catch (e) {
-    res.status(404).end();
-  }
-});
-
-app.post("/api/blogs", async (req, res) => {
-  try {
-    const { author, url, title, likes } = req.body;
-
-    const blog = await sequelize.query(
-      `INSERT INTO blogs (author, url, title, likes) values ('${author}', '${url}', '${title}', '${likes}');`)
-    res.status(201).json(blog);
-  } catch (e) {
-    res.status(404).end();
-  }
-});
-
-app.delete("/api/blogs/:id", async (req, res) => {
-  try {
-    const blog = await sequelize.query(`DELETE FROM blogs WHERE id=${req.params.id};`)
-    res.status(200).json(blog);
-  } catch (e) {
-    res.status(404).end()
-  }
-});
-
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}/`);
-});
+start();
