@@ -16,8 +16,8 @@ User.init(
       allowNull: false,
       validate: {
         isEmail: {
-          msg: "Validation isEmail on username failed"
-        }
+          msg: "Validation isEmail on username failed",
+        },
       },
     },
     name: {
@@ -29,6 +29,7 @@ User.init(
     sequelize,
     underscored: true,
     modelName: "users",
+    timestamps: false,
   }
 );
 

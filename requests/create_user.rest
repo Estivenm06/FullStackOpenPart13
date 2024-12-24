@@ -1,0 +1,19 @@
+POST http://localhost:3001/api/users
+Content-Type: application/json
+
+{
+    "username": "mluukkai@random.com",
+    "name": "Matti Luukkainen"
+}
+
+###
+POST http://localhost:3001/api/users
+Content-Type: application/json
+
+{
+    "username": "lynx@random.com",
+    "name": "Kalle Ilves"
+}
+
+###
+GET http://localhost:3001/api/users

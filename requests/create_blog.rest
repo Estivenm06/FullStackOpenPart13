@@ -1,0 +1,14 @@
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpQHJhbmRvbS5jb20iLCJpZCI6MSwiaWF0IjoxNzM1MDczMTA3fQ.J4005Mrfukt6I6R5tF-AUpklS0MZw87BVi4UHr4ijbk
+
+{
+    "author": "Random author blog",
+    "title": "Creating blog with rest",
+    "url": "www.random.com",
+    "likes": 20,
+    "year": 2025
+}
+
+###
+GET http://localhost:3001/api/blogs

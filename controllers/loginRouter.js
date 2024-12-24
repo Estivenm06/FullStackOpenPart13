@@ -15,7 +15,7 @@ router.post("/", async (req, res, next) => {
     const passwordCorrect = body.password === "secret";
 
     if (!(user && passwordCorrect)) {
-      res.send(400).send({ error: "Username or password incorrect" });
+      res.status(400).send({ error: "Username or password incorrect" });
     }
 
     const userForToken = {

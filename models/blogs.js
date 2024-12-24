@@ -26,6 +26,21 @@ Blog.init(
       type: DataTypes.INTEGER,
       defaultValue: 0,
     },
+    year: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        isWritten(value) {
+          if (value < 1991) {
+            throw new Error("Year has to be equal or most than 1991");
+          }
+          const date = new Date()
+          if (value > date.getUTCFullYear()) {
+            throw new Error("Year is greater than today");
+          }
+        },
+      },
+    },
   },
   {
     sequelize,
@@ -35,4 +50,4 @@ Blog.init(
   }
 );
 
-module.exports = Blog
+module.exports = Blog;
