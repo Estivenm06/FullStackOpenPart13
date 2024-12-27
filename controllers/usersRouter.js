@@ -16,8 +16,8 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   const where = {};
-  if(req.query.read){
-    where.read = req.query.read
+  if (req.query.read) {
+    where.read = req.query.read;
   }
 
   const user = await User.findByPk(req.params.id, {
@@ -30,7 +30,7 @@ router.get("/:id", async (req, res) => {
         through: {
           as: "reading_list",
           attributes: ["id", "read"],
-          where
+          where,
         },
       },
     ],
@@ -41,9 +41,9 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res, next) => {
   try {
     const user = await User.create(req.body);
-    res.json(user);
+    return res.json(user);
   } catch (error) {
-    res.status(400).json({ error: [error.errors[0].message] });
+    return res.status(400).json({ error: [error.errors[0].message] });
   }
 });
 
@@ -57,12 +57,12 @@ router.put("/:username", async (req, res) => {
     if (user) {
       user.username = req.body.username;
       await user.save();
-      res.json(user);
+      return res.json(user);
     } else {
-      res.status(400).send({ error: "User not found" });
+      return res.status(400).send({ error: "User not found" });
     }
   } catch (error) {
-    res.status(400).send(error);
+    return res.status(400).send(error);
   }
 });
 

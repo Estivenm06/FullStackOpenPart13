@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { User } = require("../models");
+const { User, Active } = require("../models");
 const jwt = require("jsonwebtoken");
 const { SECRET } = require("../utils/config");
 
@@ -15,7 +15,7 @@ router.post("/", async (req, res, next) => {
     const passwordCorrect = body.password === "secret";
 
     if (!(user && passwordCorrect)) {
-      res.status(400).send({ error: "Username or password incorrect" });
+      return res.status(400).send({ error: "Username or password incorrect" });
     }
 
     const userForToken = {
@@ -23,9 +23,25 @@ router.post("/", async (req, res, next) => {
       id: user.id,
     };
 
-    const token = jwt.sign(userForToken, SECRET);
+    const token = jwt.sign(userForToken, SECRET, {
+      expiresIn: 60 * 60,
+    });
 
-    res.json({ token, username: user.username, user: user.name });
+    const isActive = await Active.findOne({ where: { userId: user.id } });
+    if (isActive) {
+      return res.status(401).json({ error: "This user is already logged." });
+    } else {
+      const active = await Active.create({ userId: user.id, active: true });
+
+      if (active) {
+        return res.json({
+          token,
+          username: user.username,
+          user: user.name,
+          active: true,
+        });
+      }
+    }
   } catch (error) {
     next(error);
   }

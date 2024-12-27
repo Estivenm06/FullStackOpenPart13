@@ -1,4 +1,4 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes, Sequelize } = require("sequelize");
 
 module.exports = {
   up: async ({ context: queryInterface }) => {
@@ -23,11 +23,11 @@ module.exports = {
       },
       created_at: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
+        defaultValue: Sequelize.fn('NOW'),
       },
       updated_at: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
+        defaultValue: Sequelize.fn('NOW'),
       },
       year: {
         type: DataTypes.INTEGER,
@@ -61,11 +61,11 @@ module.exports = {
         },
         created_at: {
           type: DataTypes.DATE,
-          defaultValue: DataTypes.NOW
+          defaultValue: Sequelize.fn('NOW'),
         },
         updated_at: {
           type: DataTypes.DATE,
-          defaultValue: DataTypes.NOW
+          defaultValue: Sequelize.fn('NOW'),
         },
       });
     await queryInterface.addColumn("blogs", "user_id", {
