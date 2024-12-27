@@ -1,13 +1,26 @@
 POST http://localhost:3001/api/blogs
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpQHJhbmRvbS5jb20iLCJpZCI6MSwiaWF0IjoxNzM1MDczMTA3fQ.J4005Mrfukt6I6R5tF-AUpklS0MZw87BVi4UHr4ijbk
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpQHJhbmRvbS5jb20iLCJpZCI6MSwiaWF0IjoxNzM1MjYwOTY4fQ.3DNT-noDFUuH5WKoel3cFopZWEhLm0qmYYfWpfRq8o4
 
 {
     "author": "Random author blog",
     "title": "Creating blog with rest",
     "url": "www.random.com",
     "likes": 20,
-    "year": 2025
+    "year": 2024
+}
+
+###
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imx5bnhAcmFuZG9tLmNvbSIsImlkIjoyLCJpYXQiOjE3MzUyNjA3MTJ9.nON3uLiDign21DFWvsBbfHi9BdOfUq4rrc033ML1juU
+
+{
+    "author": "Random author blog for second user",
+    "title": "Creating blog",
+    "url": "www.random.co",
+    "likes": 50,
+    "year": 2020
 }
 
 ###

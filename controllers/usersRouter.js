@@ -7,11 +7,29 @@ router.get("/", async (req, res) => {
     include: {
       model: Blog,
       attributes: {
-        exclude: ['userId']
-      }
+        exclude: ["userId"],
+      },
     },
   });
   res.json(users);
+});
+
+router.get("/:id", async (req, res) => {
+    const user = await User.findByPk(req.params.id, {
+      attributes: {exclude: ['']},
+      include: [
+        {
+          model: Blog,
+          as: 'readings',
+          attributes: ['id', 'url', 'title', 'author', 'likes', 'year'],
+          through: {
+            as: 'reading_list',
+            attributes: ['id', 'read']
+          }
+        }
+      ]
+    });
+    res.json(user);
 });
 
 router.post("/", async (req, res, next) => {
